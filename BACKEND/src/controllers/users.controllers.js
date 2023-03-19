@@ -111,13 +111,13 @@ const verifyUser = async (req, res) => {
 }
 
 const Updateuser = async (req, res) => {
-	// const {id, username,email,password,country, address, City, State, phone } = req.body
-	const newDataForOurUser = req.body
+	const {id, username,country, address, City, State, phone } = req.body
+	// const newDataForOurUser = req.body
 	// console.log(req.body._id)
 	try {
 		const Updateusers = await Usuario.findByIdAndUpdate(req.body._id,
-			// {username,email,	password,country, address, City, State, phone },
-			newDataForOurUser,
+			{username,country, address, City, State, phone },
+			// newDataForOurUser,
 			{ new: true }
 		).select("-password")
 
