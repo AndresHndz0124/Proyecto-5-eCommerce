@@ -1,16 +1,17 @@
 /* Importing the express module and creating an instance of it. */
 const express = require('express')
-const { getUsuario, createUsuario, updateUsuario, loginUser, verifyUser } = require('../controllers/users.controllers')
+const { getUsuario, createUsuario, Updateuser, loginUser, verifyUser } = require('../controllers/users.controllers')
 const router = express.Router()
+const auth = require('../config/authorization')
 
-router.get('/obtener', getUsuario)
+router.get('/get', getUsuario)
 
-router.post('/crear', createUsuario)
+router.post('/post', createUsuario)
 
-router.put('/actualizar', updateUsuario)
+router.put('/put',auth, Updateuser)
 
 router.post('/login', loginUser)
 
-router.post('/verificar', verifyUser)
+router.post('/verify',auth, verifyUser)
 
 module.exports = router

@@ -11,11 +11,38 @@ const userSchema = mongoose.Schema(
 		email: {
 			type: String,
 			required: true,
+			unique: true,
 		},
 		password: {
 			type: String,
 			required: true,
 		},
+		country: {
+			type: String,
+			required: false,
+			default: ""
+		},
+		address: {
+			type: String,
+			required: false,
+			default: ""
+		},
+		City: {
+			type: String,
+			required: false,
+			default: ""
+		},
+		State: {
+			type: String,
+			required: false,
+			default: ""
+		},
+		phone: {
+			type: Number,
+			required: false,
+			default: ""
+		},
+
 	},
 	{
 		timestamps: true, // Permite agregar la fecha en el que fue generado el documento.

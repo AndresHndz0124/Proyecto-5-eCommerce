@@ -98,6 +98,7 @@ const createProducts = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			msg: 'Hubo un error guardando los datos',
+			message: error.message,
 		})
 	}
 }
@@ -107,6 +108,7 @@ const updateProducts = async (req, res) => {
 
 	try {
 		const UpdateProduct = await Products.findByIdAndUpdate(id, { nombre, precio, imagen  }, { new: true })
+		// const UpdateProduct = await Student.updateOne({ nombre }, { precio, imagen  });
 		res.json(UpdateProduct)
 	} catch (error) {
 		res.status(500).json({

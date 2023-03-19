@@ -2,6 +2,7 @@ const Usuario = require('../models/users') // NUESTRO MODELO PARA PERMITIR GENER
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+
 const getUsuario = async (req, res) => {
 	try {
 		const usuarios = await Usuario.find({})
@@ -13,7 +14,7 @@ const getUsuario = async (req, res) => {
 
 // CREAR UN USUARIO JWT
 const createUsuario = async (req, res) => {
-	const { username, email, password } = req.body // OBTENER USUARIO, EMAIL Y PASSWORD DE LA PETICIÓN
+	const { username, email, password, country, address, City, State, phone } = req.body // OBTENER USUARIO, EMAIL Y PASSWORD DE LA PETICIÓN
 	// GENERAMOS STRING ALEATORIO PARA USARSE CON EL PASSWORD
 	const salt = await bcryptjs.genSalt(10)
 	const hashedPassword = await bcryptjs.hash(password, salt)
@@ -24,6 +25,11 @@ const createUsuario = async (req, res) => {
 			username,
 			email,
 			password: hashedPassword,
+			country,
+			address,
+			City,
+			State,
+			phone
 		})
 
 		const payload = {
@@ -31,7 +37,6 @@ const createUsuario = async (req, res) => {
 				id: nuevoUsuario._id,
 			},
 		}
-
 		// 2. FIRMAR EL JWT
 		jwt.sign(
 			payload, // DATOS QUE SE ACOMPAÑARÁN EN EL TOKEN
@@ -93,8 +98,9 @@ const loginUser = async (req, res) => {
 const verifyUser = async (req, res) => {
 	try {
 		// CONFIRMAMOS QUE EL USUARIO EXISTA EN BASE DE DATOS Y RETORNAMOS SUS DATOS, EXCLUYENDO EL PASSWORD
-		const usuario = await Usuario.findById(req.user.id).select('-password')
-		res.json({ usuario })
+		const usuario = await Usuario.findById(req.body._id).select('-password')
+		res.json({msg: 'Usuario encontrado',
+		usuario })
 	} catch (error) {
 		// EN CASO DE ERROR DEVOLVEMOS UN MENSAJE CON EL ERROR
 		res.status(500).json({
@@ -104,16 +110,24 @@ const verifyUser = async (req, res) => {
 	}
 }
 
-const updateUsuario = async (req, res) => {
-	const { nombre, email } = req.body
+const Updateuser = async (req, res) => {
+	// const {id, username,email,password,country, address, City, State, phone } = req.body
+	const newDataForOurUser = req.body
+	// console.log(req.body._id)
 	try {
-		const actualizacionUsuario = await Usuario.findByIdAndUpdate(req.user.id, { nombre, email }, { new: true })
-		res.json(actualizacionUsuario)
+		const Updateusers = await Usuario.findByIdAndUpdate(req.body._id,
+			// {username,email,	password,country, address, City, State, phone },
+			newDataForOurUser,
+			{ new: true }
+		).select("-password")
+
+		res.json(Updateusers)
 	} catch (error) {
 		res.status(500).json({
-			msg: 'Hubo un error actualizando la Usuario',
+			msg: 'Hubo un error actualizando el  Usuario',
 		})
+
 	}
 }
 
-module.exports = { getUsuario, createUsuario, updateUsuario, loginUser, verifyUser }
+module.exports = { getUsuario, createUsuario, Updateuser, loginUser, verifyUser }
