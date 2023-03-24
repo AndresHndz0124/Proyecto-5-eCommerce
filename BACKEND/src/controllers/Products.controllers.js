@@ -90,10 +90,10 @@ const getProducts = async (req, res) => {
 }
 
 const createProducts = async (req, res) => {
-	const { nombre, precio, imagen } = req.body
+	const { name, price, img } = req.body
 
 	try {
-		const NewProduct = await Products.create({ nombre, precio, imagen  })
+		const NewProduct = await Products.create({ name, price, img  })
 		res.json(NewProduct)
 	} catch (error) {
 		res.status(500).json({
@@ -104,10 +104,10 @@ const createProducts = async (req, res) => {
 }
 
 const updateProducts = async (req, res) => {
-	const { id, nombre, precio, imagen  } = req.body
+	const { id, name, price, img  } = req.body
 
 	try {
-		const UpdateProduct = await Products.findByIdAndUpdate(id, { nombre, precio, imagen  }, { new: true })
+		const UpdateProduct = await Products.findByIdAndUpdate({_id: id}, { name, price, img  }, { new: true })
 		// const UpdateProduct = await Student.updateOne({ nombre }, { precio, imagen  });
 		res.json(UpdateProduct)
 	} catch (error) {

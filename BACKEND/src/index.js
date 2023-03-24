@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const userRoutes = require('./routes/users.routes')
 const ProductsRoutes = require('./routes/Products.routes')
+// const ProductsCartRoutes = require('./routes/ProductsCart.routes')
 const cors = require('cors')
 const connectDB = require('./config/db')
 
@@ -13,6 +14,7 @@ app.use(express.json())
 
 //3. Rutas
 app.use('/Products',ProductsRoutes)
+// app.use('/ProductsCart',ProductsCartRoutes)
 app.use('/Users', userRoutes)
 // app.use('/menu',RestauranteRoutes)
 

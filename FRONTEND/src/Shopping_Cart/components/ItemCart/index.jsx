@@ -17,7 +17,7 @@ export const ItemCart = ({ item }) => {
           <p>{item.name}</p>
           <div className={styles.buttons}>
             <button onClick={() => AddItemToCart(item)}>AGREGAR</button>
-            <button onClick={() => DeleteItemToCart(id)}>SACAR</button>
+            <button onClick={() => DeleteItemToCart(id)}>Eliminar</button>
           </div>
         </div>
         <div className={styles.right}>

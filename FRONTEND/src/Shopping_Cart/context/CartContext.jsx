@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-
+import axios from "axios";
 /* Creamos el context, se le puede pasar un valor inicial */
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   /* Creamos un estado para el carrito */
+
   const [cartItems, setCartItems] = useState(() => {
     try {
       /* Verificamos si hay productos en el local storage,
@@ -17,24 +18,33 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  /* Cada vez que se actualize el carrito seteamos el local storage para guardar los productos */
   useEffect(() => {
-    localStorage.setItem("cartProducts", JSON.stringify(cartItems));
-  }, [cartItems]);
+    getProducts();
+      localStorage.setItem("cartProducts", JSON.stringify(cartItems));
+    }, [cartItems]);
 
+    const [products, setProducts] = useState([]);
+
+    const getProducts = async () => {
+      await axios
+        .get("http://localhost:4000/Products/get")
+        .then(({ data }) => setProducts(data.Product));
+    };
+  
   /* Creamos la funcion para agregar productos al carrito */
   const AddItemToCart = (product) => {
     /* Recibimos un producto y nos fijamos si ya esta en el carrito */
     const inCart = cartItems.find(
-      (productInCart) => productInCart.id === product.id
+      (productInCart) => productInCart._id === product._id
     );
+    console.log('Agregar',inCart,product)
 
     /* Si el producto se encuentra en el carrito, recorremos el carrito
     y al producto le sumamos uno a la cantidad, sino retornamos el carrito como estaba */
     if (inCart) {
       setCartItems(
         cartItems.map((productInCart) => {
-          if (productInCart.id === product.id) {
+          if (productInCart._id === product._id) {
             return { ...inCart, amount: inCart.amount + 1 };
           } else return productInCart;
         })
@@ -43,6 +53,11 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartItems([...cartItems, { ...product, amount: 1 }]);
     }
+    useEffect(() => {
+      localStorage.setItem("cartProducts", JSON.stringify(cartItems));
+    }, [cartItems]);
+    getProducts();
+
   };
 
   /* Creamos la funcion para borrar productos del carrito */
@@ -51,7 +66,7 @@ export const CartProvider = ({ children }) => {
     const inCart = cartItems.find(
       (productInCart) => productInCart.id === productId
     );
-
+    console.log('eliminar',inCart,productId)
     /* Si la cantidad del producto es igual a 1, filtramos el carrito y lo sacamos */
     if (inCart.amount === 1) {
       setCartItems(
@@ -73,7 +88,8 @@ export const CartProvider = ({ children }) => {
   return (
     /* Envolvemos el children con el provider y le pasamos un objeto con las propiedades que necesitamos por value */
     <CartContext.Provider
-      value={{ cartItems, AddItemToCart, DeleteItemToCart }}
+      value={{ cartItems, products, AddItemToCart, DeleteItemToCart }}
+    // value={{ cartItems, AddItemToCart, DeleteItemToCart }}
     >
       {children}
     </CartContext.Provider>

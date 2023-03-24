@@ -2,20 +2,20 @@
 const mongoose = require('mongoose')
 
 // 2. SCHEMA
-const ProductsSchema  = mongoose.Schema(
+const ProductsSchema = mongoose.Schema(
 	{
-		nombre: {
+		name: {
 			type: String,
-			required: true,
+			required: true, unique: true
 		},
-		precio: {
+		price: {
 			type: Number,
 			required: true,
 		},
-		imagen: {
+		img: {
 			type: String,
 			required: true,
-		},
+		}
 	},
 	{
 		timestamps: true, // Permite agregar la fecha en el que fue generado el documento.
