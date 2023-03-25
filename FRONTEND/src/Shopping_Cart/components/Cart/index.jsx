@@ -87,7 +87,7 @@ const Cart = () => {
             </div>
           )}
 
-          <h2 className={styles.total}>Total: ${total}</h2>
+          <h2 className={styles.total}>Total: ${total.toFixed(2)}</h2>
         </div>
       )}
     </div>

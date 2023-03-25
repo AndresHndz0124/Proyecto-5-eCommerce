@@ -7,7 +7,7 @@ export const ItemCart = ({ item }) => {
   const { DeleteItemToCart, AddItemToCart } = useContext(CartContext);
 
   /* Desestructuramos el item para sacar solo la id */
-  const { id } = item;
+  // const { id } = item;
 
   return (
     <div className={styles.cartItem}>
@@ -17,7 +17,7 @@ export const ItemCart = ({ item }) => {
           <p>{item.name}</p>
           <div className={styles.buttons}>
             <button onClick={() => AddItemToCart(item)}>AGREGAR</button>
-            <button onClick={() => DeleteItemToCart(id)}>Eliminar</button>
+            <button onClick={() => DeleteItemToCart(item._id)}>Eliminar</button>
           </div>
         </div>
         <div className={styles.right}>
