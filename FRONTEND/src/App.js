@@ -7,6 +7,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Blog from "./Pages/Blog";
 import Cart from './Pages/Home';
+import LoginForm from './Pages/Login/SingUp';
 import initFontAwesome from "./utility/initFontAwesome";
 initFontAwesome();
 
@@ -16,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Cart />} />
         <Route path="/Blog" element={<Blog/>} />
-        {/* <Route path="/booking" element={<Ourmenu/>} /> */}
+        <Route path="/Login" element={<LoginForm/>} />
         {/* <Route path="*" element={<Navigate to="/home" />} /> */}
       </Routes>
     </BrowserRouter>

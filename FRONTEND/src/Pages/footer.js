@@ -5,7 +5,6 @@ import { faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 function FooterPage() {
     return (
         <footer className="bg-dark text-center text-white">
-
             <div className="container p-4">
                 <section className="mb-4">
                     <a className="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i><FontAwesomeIcon icon={['fab', 'facebook']} /></i></a>
