@@ -8,7 +8,7 @@ function PrivateRoutes() {
 		VeryfyingToken()
 	}, [])
 
-	return authStatus ? <Outlet /> : <Navigate to='/dashboard' replace />
+	return authStatus ? <Outlet /> : <Navigate to='/CheckOut' replace />
 }
 
 export default PrivateRoutes

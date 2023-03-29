@@ -2,28 +2,39 @@ import React from 'react'
 import { Container } from 'react-bootstrap'
 import { Routes, Route } from 'react-router-dom'
 import Singup from './Singup'
-import Login from './Login'
-import Dashboard from './Dashboard'
-import Home from './Home'
+import LoginForm from './Login'
+import CheckOut from '../../Pages/CheckOut'
+import Cart from '../../Pages/Home'
 import ForgotPassword from './ForgotPassword'
 import PrivateRoutes from '../Auth/PrivateRoutes'
+import Header from "../Header";
+import FooterPage from "../footer";
+
 
 function App() {
 	return (
-		<Container className='d-flex aling-items-center justify-content-center' style={{ minHeight: '100vh' }}>
+		<React.Fragment>
+		<Header />
+		<Container className='form aling-items-center' style={{ minHeight: '100vh' }}>
 			<div className='w-100' style={{ maxWidth: '400px' }}>
 				<Routes>
-					<Route path='/' element={<Home />} />
+
+{/* OJO POSIBLMENTE LLEVE AL HOME REPETIDO PORQUE ESTA DENTRO DEL HEADER */}
+
+				{/* LLeva al home */}
+					<Route path='/' element={<Cart />} />  
 					<Route element={<PrivateRoutes />}>
-					<Route path='/dashboard' element={<Dashboard />} />
+					{/* <Route path='/CheckOut' element={<CheckOut />} /> */}
 					</Route>
 
-					<Route path='/login' element={<Login />} />
+					<Route path='/login' element={<LoginForm />} />
 					<Route path='/singup' element={<Singup />} />
 					<Route path='/forgot-password' element={<ForgotPassword />} />
 				</Routes>
 			</div>
 		</Container>
+		<FooterPage />
+        </React.Fragment>
 	)
 }
 
