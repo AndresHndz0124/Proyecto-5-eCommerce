@@ -8,8 +8,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Blog from "./Pages/Blog";
 import Cart from './Pages/Home';
 import CheckOut from './Pages/CheckOut'
-import LoginForm from './Pages/Login/LoginUser';
+
 import initFontAwesome from "./utility/initFontAwesome";
+
+import Singup from './Pages/LoginRegister/RegisterUser'
+import LoginForm from './Pages/LoginRegister/Login';
+import ForgotPassword from './Pages/LoginRegister/ForgotPassword'
+import PrivateRoutes from './components/Auth/PrivateRoutes'
+
 initFontAwesome();
 
 function App() {
@@ -17,10 +23,18 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Cart />} />
-        <Route path="/Blog" element={<Blog/>} />
-        <Route path="/Login" element={<LoginForm/>} />
-        <Route path="/CheckOut" element={<CheckOut/>} />
-        {/* <Route path="*" element={<Navigate to="/home" />} /> */}
+        <Route path="/Blog" element={<Blog />} />
+
+        <Route element={<PrivateRoutes />}>
+          <Route path="/CheckOut" element={<CheckOut />} />
+        </Route>
+
+        <Route path='/login' element={<LoginForm />} />
+        <Route path='/singup' element={<Singup />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+
+
+
       </Routes>
     </BrowserRouter>
   );
