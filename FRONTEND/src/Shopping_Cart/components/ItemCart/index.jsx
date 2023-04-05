@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import CartContext from "../../context/CartContext";
 import styles from "./styles.module.scss";
 
+
 export const ItemCart = ({ item }) => {
   /* Traemos del context las funciones para agregar y sacar productos del carrito */
   const { DeleteItemToCart, AddItemToCart } = useContext(CartContext);
@@ -23,7 +24,9 @@ export const ItemCart = ({ item }) => {
         <div className={styles.right}>
           <div>{item.amount}</div>
           <p>Total: ${item.amount * item.price}</p>
+
         </div>
+
       </div>
     </div>
   );

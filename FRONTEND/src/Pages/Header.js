@@ -39,7 +39,7 @@ function Header() {
                                         <Link className="nav-link" aria-current="page" to="/Blog"><u>Blog</u></Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" aria-current="page" to="/CheckOut"><u>Perfil</u></Link>
+                                        <Link className="nav-link" aria-current="page" to="/Profile"><u>Profile</u></Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link" aria-current="page" to='/' onClick={logout}><u>Cerrar sesión</u></Link>

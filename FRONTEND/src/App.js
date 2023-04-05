@@ -6,7 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Blog from "./Pages/Blog";
 import Cart from './Pages/Home';
-import CheckOut from './Pages/CheckOut'
+import Profile from './Pages/CheckOut'
 
 import initFontAwesome from "./utility/initFontAwesome";
 import Singup from './Pages/LoginRegister/RegisterUser'
@@ -24,7 +24,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Cart />} />
           <Route path="/Blog" element={<Blog />} />
-          <Route path="/CheckOut" element={<CheckOut />} />
+          <Route path="/Profile" element={<Profile />} />
         </Route>
 
         <Route path='/login' element={<LoginForm />} />

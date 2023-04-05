@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import clienteAxios from '../../config/axios'
+
 
 const CartContext = createContext();
 
@@ -26,8 +27,8 @@ export const CartProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
   const getProducts = async () => {
-    await axios
-      .get("http://localhost:4000/Products/get")
+    await clienteAxios
+      .get("/Products/get")
       // .get(process.env.URL_BACKEND) 
       .then(({ data }) => setProducts(data.Product));
   };

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { ItemCart } from "../ItemCart";
 import CartContext from "../../context/CartContext";
 import styles from "./styles.module.scss";
-
+import PaypalButton from '../../../components/PaypalButton'
 const Cart = () => {
   /* Creamos 2 estados, uno para ver si el carrito esta abierto o no 
   y otro para obtener la cantidad de productos que tenemos en el carrito */
@@ -88,6 +88,7 @@ const Cart = () => {
           )}
 
           <h2 className={styles.total}>Total: ${total.toFixed(2)}</h2>
+          <PaypalButton value={total.toFixed(2)} />
         </div>
       )}
     </div>

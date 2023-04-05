@@ -18,8 +18,8 @@ function Blog() {
                 <div>
 
                     <div className="subscription">
-                        <h2 >Reserva con nosotros!</h2>
-                        <h5>A través del siguiente formulario, nos podremos comunicar contigo para revisar fechas y disponibilidad de horarios.</h5>
+                        <h2 >Tu información personal</h2>
+                        <h5>A través del siguiente formulario, podras diligenciar datos relevantes en cuanto a tu perfil de usuario.</h5>
                     </div>
 
                     <ContactForm />
