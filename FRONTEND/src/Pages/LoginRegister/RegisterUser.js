@@ -1,39 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 import Header from "../Header";
 import FooterPage from "../footer";
 import { Container } from 'react-bootstrap'
-import UserContextProvider from '../../context/ContexUser'
+import { UserContext} from '../../context/userContext'
+
 
 function Signup() {
+	const userCtx = useContext(UserContext)
+	const { authStatus, registerUser } = userCtx
+
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	const navigate = useNavigate();
+	useEffect(() => {
+		if (authStatus) navigate('/')
+	  }, [authStatus])
+
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		try {
-			// Realizar solicitud de registro de usuario
-			const response = await axios.post('http://localhost:4000/Users/registerUser', {
-				name,
-				email,
-				password,
-			});
+		// registerUser({name,email,password})
+		// try {
+		// 	// Realizar solicitud de registro de usuario
+		// 	const response = await clienteAxios.post('http://localhost:4000/Users/registerUser', {
+		// 		name,
+		// 		email,
+		// 		password,
+		// 	});
 
-			console.log('Registro de usuario exitoso!');
-			toast.success('Registro de usuario exitoso!');
-			navigate('/login');
+		// 	console.log('Registro de usuario exitoso!');
+		// 	toast.success('Registro de usuario exitoso!');
+	
 
-		} catch (error) {
-			console.log('Error al registrar usuario:', error);
-			toast.error('Error al registrar usuario. Por favor, inténtalo de nuevo.');
-		}
+		// } catch (error) {
+		// 	console.log('Error al registrar usuario:', error);
+		// 	toast.error('Error al registrar usuario. Por favor, inténtalo de nuevo.');
+		// }
 	};
 
 	const handleNameChange = (event) => {
@@ -51,7 +58,6 @@ function Signup() {
 	return (
 		<React.Fragment>
 			<Header />
-			<UserContextProvider>
 				<Container className='form aling-items-center' style={{ minHeight: '100vh' }}>
 					<div className='w-100' style={{ maxWidth: '400px' }}>
 						<Card>
@@ -74,7 +80,6 @@ function Signup() {
 										Registrar
 									</Button>
 								</Form>
-								<ToastContainer />
 							</Card.Body>
 						</Card>
 						<div className='w-100 text-center mt-2'>
@@ -82,7 +87,6 @@ function Signup() {
 						</div>
 					</div>
 				</Container>
-			</UserContextProvider>
 			<FooterPage />
 		</React.Fragment>
 	);

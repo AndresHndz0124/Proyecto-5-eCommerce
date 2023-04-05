@@ -4,14 +4,16 @@ const { getUsuario, createUsuario, Updateuser, loginUser, verifyUser } = require
 const router = express.Router()
 const auth = require('../config/authorization')
 
-router.get('/get', getUsuario)
+router.get('/get',auth, getUsuario)
 
-router.post('/post', createUsuario)
+router.post('/Create', createUsuario)
 
-router.put('/put',auth, Updateuser)
+router.put('/Update',auth, Updateuser)
 
 router.post('/login', loginUser)
 
-router.post('/verify',auth, verifyUser)
+// router.post('/verify',auth, verifyUser)
+
+router.get('/verify',auth, verifyUser)
 
 module.exports = router

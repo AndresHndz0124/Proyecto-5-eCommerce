@@ -15,11 +15,12 @@ const getUsuario = async (req, res) => {
 // CREAR UN USUARIO JWT
 const createUsuario = async (req, res) => {
 	const { username, email, password, country, address, City, State, phone } = req.body // OBTENER USUARIO, EMAIL Y PASSWORD DE LA PETICIÓN
-	// GENERAMOS STRING ALEATORIO PARA USARSE CON EL PASSWORD
+	
+	try {
+		// GENERAMOS STRING ALEATORIO PARA USARSE CON EL PASSWORD
 	const salt = await bcryptjs.genSalt(10)
 	const hashedPassword = await bcryptjs.hash(password, salt)
-
-	try {
+		
 		// CREAMOS UN USUARIO CON SU PASSWORD ENCRIPTADO
 		const nuevoUsuario = await Usuario.create({
 			username,
@@ -65,7 +66,7 @@ const loginUser = async (req, res) => {
 		let foundUser = await Usuario.findOne({ email: email }) // ENCONTRAMOS UN USUARIO
 		if (!foundUser) {
 			// SI NO HUBO UN USUARIO ENCONTRADO, DEVOLVEMOS UN ERROR
-			return res.status(400).json({ msg: 'El usuario no existe' })
+			return res.status(400).json({ msg: 'El usuario o la contraseña no coincide' })
 		}
 		// SI TODO OK, HACEMOS LA EVALUACIÓN DE LA CONTRASEÑA ENVIADA CONTRA LA BASE DE DATOS
 		const passCorrecto = await bcryptjs.compare(password, foundUser.password)
@@ -104,21 +105,19 @@ const verifyUser = async (req, res) => {
 	} catch (error) {
 		// EN CASO DE ERROR DEVOLVEMOS UN MENSAJE CON EL ERROR
 		res.status(500).json({
-			msg: 'Hubo un error',
+			msg: 'Hubo un error al verificar el usuario',
 			error,
 		})
 	}
 }
 
 const Updateuser = async (req, res) => {
-	const {id, username,country, address, City, State, phone } = req.body
+	const {username,country, address, City, State, phone } = req.body
 	// const newDataForOurUser = req.body
 	// console.log(req.body._id)
 	try {
 		const Updateusers = await Usuario.findByIdAndUpdate(req.body._id,
-			{username,country, address, City, State, phone },
-			// newDataForOurUser,
-			{ new: true }
+			{username,country, address, City, State, phone },{ new: true }
 		).select("-password")
 
 		res.json(Updateusers)

@@ -14,7 +14,7 @@ const Products = () => {
             <img src={product.img} alt={product.name} />
             <div>
               <p>{product.name} </p>
-              <spam>${product.price}</spam>
+              <span>${product.price}</span>
             </div>
             {!product.inCart ? (
               <button onClick={() => AddItemToCart(product)}>

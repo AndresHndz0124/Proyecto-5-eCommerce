@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import Carts from "../Shopping_Cart/components/Home/Cart_Home";
 import { CartProvider } from "../Shopping_Cart/context/CartContext";
+import { UserContext } from '../context/userContext'
 
 function Header() {
     const location = useLocation();
+    const ctx = useContext(UserContext)
+    const { logout, authStatus } = ctx
     return (
         <header>
             <nav className="navbar_propio navbar-expand-lg navbar-dark bg-dark static-top">
@@ -25,32 +28,43 @@ function Header() {
                     </div>
                     <div className="Div_fijo">
                         <ul className="navbar-nav ml-auto" id="Fijo">
-                            <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/"><u>Home</u></Link>
-                            </li>
 
-                            <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/Blog"><u>Blog</u></Link>
-                            </li>
+                            {authStatus ? (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" aria-current="page" to="/"><u>Home</u></Link>
+                                    </li>
 
-                            <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/Login"><u>Login</u></Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/CheckOut"><u>CheckOut</u></Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" aria-current="page" to="/CheckOut"><u>Perfil</u></Link>
-                            </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" aria-current="page" to="/Blog"><u>Blog</u></Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" aria-current="page" to="/CheckOut"><u>Perfil</u></Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" aria-current="page" to='/' onClick={logout}><u>Cerrar sesión</u></Link>
+                                    </li>
+                                </>
+
+                            ) : (
+                                <li className="nav-item">
+                                    <Link className="nav-link" aria-current="page" to='/login'><u>Login</u></Link>
+                                </li>
+                            )}
+
+
                         </ul>
                     </div>
                 </div>
                 {/* Muestra el componente Carts solo en las rutas diferentes a la página de inicio */}
-                {location.pathname !== '/' && (
+
+                {location.pathname !== '/' && authStatus && (
                     <CartProvider>
                         <Carts />
                     </CartProvider>
                 )}
+
+
             </nav>
             <Outlet />
         </header >

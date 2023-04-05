@@ -1,14 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { UserContext } from '../../context/ContexUser'
+import { UserContext } from '../../context/userContext'
 
-function PrivateRoutes() {
+export default function PrivateRoutes() {
 	const { authStatus, VeryfyingToken } = useContext(UserContext)
 	useEffect(() => {
 		VeryfyingToken()
 	}, [])
 
-	return authStatus ? <Outlet /> : <Navigate to='/CheckOut' replace />
+	return authStatus ? <Outlet /> : <Navigate to='/login' replace />
 }
 
-export default PrivateRoutes

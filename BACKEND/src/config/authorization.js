@@ -4,6 +4,7 @@ module.exports = (req, res, next) => {
 
     const token = req.header('x-auth-token')
 
+
     if(!token) {
         return res.status(401).json({
             msg: "No hay token, permiso no válido"
@@ -11,6 +12,7 @@ module.exports = (req, res, next) => {
     }
 
     try {
+        
         const openToken = jwt.verify(token, process.env.SECRET)    
 
         req.user = openToken.user

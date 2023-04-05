@@ -2,9 +2,6 @@ import React from "react";
 import Header from "./Header";
 import FooterPage from "./footer";
 import ContactForm from "../components/forms";
-import Carts from "../Shopping_Cart/components/Home/Cart_Home";
-import { CartProvider } from "../Shopping_Cart/context/CartContext";
-
 
 
 function Blog() {
@@ -27,6 +24,7 @@ function Blog() {
 
                     <ContactForm />
                 </div>
+
             </div>
             <FooterPage />
         </React.Fragment>
