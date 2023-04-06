@@ -32,7 +32,7 @@ export default function LoginForm() {
 		event.preventDefault();
 		loginUser(email, password)
 		// localStorage.setItem('isLoggedIn', true);
-		// localStorage.setItem('username', email);
+		localStorage.setItem('username', email);
 	};
 
 	const handleEmailChange = (event) => {

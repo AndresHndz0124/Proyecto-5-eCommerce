@@ -88,7 +88,6 @@ export const UserProvider = ({ children }) => {
     }
   };
   
-  // const navigate = useNavigate()
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -96,6 +95,15 @@ export const UserProvider = ({ children }) => {
     setUserData({});
   };
   
+  const userSubmitForm = async (data) => {
+        
+    console.log("Actualizar datos de usuario")
+    const res = await clienteAxios.put("/Users/Update", data)
+
+    console.log(res)
+
+}
+
 
   useEffect(() => {
     VeryfyingToken();
@@ -103,7 +111,7 @@ export const UserProvider = ({ children }) => {
 
 
 
-const data = { registerUser, loginUser, handleChange,VeryfyingToken,logout,forgotPassword, userData, authStatus }
+const data = { registerUser, loginUser, handleChange,VeryfyingToken,logout,forgotPassword,userSubmitForm, userData, authStatus }
 // console.log('CONTEXTO USUARIO', data)
 return <UserContext.Provider value={data}>{children}</UserContext.Provider>
 }

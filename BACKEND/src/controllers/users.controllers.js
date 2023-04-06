@@ -12,15 +12,28 @@ const getUsuario = async (req, res) => {
 	}
 }
 
+// Endpoint para obtener el ID de un usuario por correo electrónico
+const getIdByEmail = async (req, res) => {
+	const { email } = req.params;
+	try {
+		const user = await Usuario.findOne({ email });
+		res.json({ id: user._id });
+	} catch (error) {
+		res.status(500).json({
+			msg: 'Hubo un error obteniendo el ID del usuario',
+		});
+	}
+};
+
 // CREAR UN USUARIO JWT
 const createUsuario = async (req, res) => {
 	const { username, email, password, country, address, City, State, phone } = req.body // OBTENER USUARIO, EMAIL Y PASSWORD DE LA PETICIÓN
-	
+
 	try {
 		// GENERAMOS STRING ALEATORIO PARA USARSE CON EL PASSWORD
-	const salt = await bcryptjs.genSalt(10)
-	const hashedPassword = await bcryptjs.hash(password, salt)
-		
+		const salt = await bcryptjs.genSalt(10)
+		const hashedPassword = await bcryptjs.hash(password, salt)
+
 		// CREAMOS UN USUARIO CON SU PASSWORD ENCRIPTADO
 		const nuevoUsuario = await Usuario.create({
 			username,
@@ -100,8 +113,10 @@ const verifyUser = async (req, res) => {
 	try {
 		// CONFIRMAMOS QUE EL USUARIO EXISTA EN BASE DE DATOS Y RETORNAMOS SUS DATOS, EXCLUYENDO EL PASSWORD
 		const usuario = await Usuario.findById(req.body._id).select('-password')
-		res.json({msg: 'Usuario encontrado',
-		usuario })
+		res.json({
+			msg: 'Usuario encontrado',
+			usuario
+		})
 	} catch (error) {
 		// EN CASO DE ERROR DEVOLVEMOS UN MENSAJE CON EL ERROR
 		res.status(500).json({
@@ -112,12 +127,12 @@ const verifyUser = async (req, res) => {
 }
 
 const Updateuser = async (req, res) => {
-	const {username,country, address, City, State, phone } = req.body
+	const { username, country, address, City, State, phone } = req.body
 	// const newDataForOurUser = req.body
 	// console.log(req.body._id)
 	try {
 		const Updateusers = await Usuario.findByIdAndUpdate(req.body._id,
-			{username,country, address, City, State, phone },{ new: true }
+			{ username, country, address, City, State, phone }, { new: true }
 		).select("-password")
 
 		res.json(Updateusers)
@@ -129,4 +144,4 @@ const Updateuser = async (req, res) => {
 	}
 }
 
-module.exports = { getUsuario, createUsuario, Updateuser, loginUser, verifyUser }
+module.exports = { getUsuario, createUsuario, Updateuser, loginUser, verifyUser,getIdByEmail }

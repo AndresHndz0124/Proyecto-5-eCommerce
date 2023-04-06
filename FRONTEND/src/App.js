@@ -6,7 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Blog from "./Pages/Blog";
 import Cart from './Pages/Home';
-import Profile from './Pages/CheckOut'
+import Profile from './Pages/Profile'
 
 import initFontAwesome from "./utility/initFontAwesome";
 import Singup from './Pages/LoginRegister/RegisterUser'
