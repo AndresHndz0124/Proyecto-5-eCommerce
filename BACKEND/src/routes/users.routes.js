@@ -6,7 +6,7 @@ const auth = require('../config/authorization')
 
 router.get('/get', auth, getUsuario)
 
-router.get('/email/:email', auth, getIdByEmail)
+router.get('/email/:email', getIdByEmail)
 
 router.post('/Create', createUsuario)
 
