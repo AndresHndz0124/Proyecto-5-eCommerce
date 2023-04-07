@@ -31,8 +31,7 @@ export default function LoginForm() {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		loginUser(email, password)
-		// localStorage.setItem('isLoggedIn', true);
-		localStorage.setItem('username', email);
+		localStorage.setItem('isLoggedIn', true);
 	};
 
 	const handleEmailChange = (event) => {

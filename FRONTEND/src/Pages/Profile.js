@@ -4,21 +4,14 @@ import FooterPage from "./footer";
 import { UserContext } from '../context/userContext';
 import clienteAxios from '../config/axios';
 
-const handleUserLookup = async (email) => {
-    try {
-      const res = await clienteAxios.get(`https://app-ecommerce.onrender.com/Users?email=${email}`);
-      const user = res.data[0];
-      return user._id;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 export default function Profile() {
     const userCtx = useContext(UserContext);
 
     const { userSubmitForm } = userCtx;
 
-    const { name, email, country, address, city, state, phone } = userCtx.user || {};
+    const { name, country, address, city, state, phone } = userCtx.user || {};
+
+    const email = localStorage.getItem('email');
 
     const [userForm, setUserForm] = useState({
         id: "",
@@ -28,9 +21,9 @@ export default function Profile() {
         address: "",
         city: "",
         state: "",
-        zipcode: "",
+        phone: "",
         email
-      })
+    })
 
     let countries = [
         "-----",
@@ -48,56 +41,41 @@ export default function Profile() {
         });
     };
 
-    // const sendData = async (event) => {
-    //     event.preventDefault();
-
-    //     try {
-    //         const res = await clienteAxios.put("https://app-ecommerce.onrender.com/Users/Update", {
-    //             _id: userCtx.user._id,
-    //             ...userForm
-    //         });
-
-    //         userSubmitForm(res.data);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
-
-
     const handleUserLookup = async () => {
-        const response = await fetch(`https://example.com/users?email=${userForm.email}`)
-        const data = await response.json()
-      
-        if (data.length > 0) {
-          const user = data[0]
-      
-          setUserForm(prevUserForm => ({
-            ...prevUserForm,
-            id: user.id,
-            name: user.name,
-            lastname: user.lastname,
-            country: user.country,
-            address: user.address,
-            city: user.city,
-            state: user.state,
-            zipcode: user.zipcode,
-          }))
+        try {
+            const response = await clienteAxios.get(`/users/email/${userForm.email}`);
+            const user = response.data;
+
+            setUserForm(prevUserForm => ({
+                ...prevUserForm,
+                id: user.id,
+                name: user.name,
+                lastname: user.lastname,
+                country: user.country,
+                address: user.address,
+                city: user.city,
+                state: user.state,
+                phone: user.phone,
+            }));
+        } catch (error) {
+            console.error(error);
+            alert("An error occurred while looking up the user");
         }
-      }
-      
+    }
 
     const sendData = async (event) => {
         event.preventDefault();
         try {
+                // _id: userCtx.user._id,
             await clienteAxios.put("/Users/Update", {
-                _id: userCtx.user._id,
+                id: userForm.id,
                 name: userForm.name,
                 email: userCtx.user.email,
                 country: userForm.country,
                 address: userForm.address,
                 city: userForm.city,
                 state: userForm.state,
-                phone: userCtx.user.phone,
+                phone: userForm.phone,
             });
             userSubmitForm(userForm);
             alert("User updated successfully");
@@ -106,7 +84,7 @@ export default function Profile() {
             alert("An error occurred while updating the user");
         }
     };
-    
+
 
     useEffect(() => {
         setUserForm({
@@ -118,6 +96,7 @@ export default function Profile() {
             phone,
             email
         });
+        handleUserLookup();
     }, [name, country, address, city, state, phone, email]);
 
     return (
@@ -132,10 +111,10 @@ export default function Profile() {
                     </label>
                     <br />
                     <label>
-                    Correo electrónico:
-                    <input type="email" name="email" value={userForm.email} readOnly />
-                </label>
-                <br />
+                        Correo electrónico:
+                        <input type="email" name="email" value={localStorage.getItem('email')} readOnly />
+                    </label>
+                    <br />
                     <label>
                         País:
                         <select name="country" value={userForm.country} onChange={handleChange}>
@@ -320,8 +299,8 @@ export default function Profile() {
                                             <div className="mt-1">
                                                 <input
                                                     type="text"
-                                                    name="zipcode"
-                                                    value={userForm.zipcode}
+                                                    name="phone"
+                                                    value={userForm.phone}
                                                     onChange={(e) => { handleChange(e) }}
                                                     className="p-1 border text-sm border-gray shadow-sm px-3 rounded focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent block w-full pr-6 sm:text-sm border-gray-300" />
                                             </div>

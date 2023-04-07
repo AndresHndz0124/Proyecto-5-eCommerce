@@ -17,13 +17,17 @@ const getIdByEmail = async (req, res) => {
 	const { email } = req.params;
 	try {
 		const user = await Usuario.findOne({ email });
-		res.json({ id: user._id });
+		res.json({
+			id: user._id,
+			username: user.username
+		});
 	} catch (error) {
 		res.status(500).json({
 			msg: 'Hubo un error obteniendo el ID del usuario',
 		});
 	}
 };
+
 
 // CREAR UN USUARIO JWT
 const createUsuario = async (req, res) => {
@@ -144,4 +148,4 @@ const Updateuser = async (req, res) => {
 	}
 }
 
-module.exports = { getUsuario, createUsuario, Updateuser, loginUser, verifyUser,getIdByEmail }
+module.exports = { getUsuario, createUsuario, Updateuser, loginUser, verifyUser, getIdByEmail }

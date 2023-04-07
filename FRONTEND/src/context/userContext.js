@@ -25,6 +25,7 @@ export const UserProvider = ({ children }) => {
       setAuthStatus(true);
       setUserData(response.data.user);
       localStorage.setItem('token', response.data.token);
+      // localStorage.setItem('email', email);
 
       console.log('Registro de usuario exitoso!');
 			toast.success('Registro de usuario exitoso!');
@@ -68,15 +69,26 @@ export const UserProvider = ({ children }) => {
     try {
       const response = await clienteAxios.post('/Users/login', {email,password,});
       console.log('datos ingresados',response);
+
+      const userResponse = await clienteAxios.get(`/users/email/${email}`);
+      const { id, username } = userResponse.data;
+      
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('email', email);
+      localStorage.setItem('id', id);
+      localStorage.setItem('username', username);
+      
       setAuthStatus(true);
       setUserData(response.data.user);
-      localStorage.setItem('token', response.data.token);
     } catch (error) {
       console.log('Email o contraseña incorrectos.');
       toast.error('Email o contraseña incorrectos.');
       setAuthStatus(false);
       setUserData({});
       localStorage.removeItem('token');
+      localStorage.removeItem('email');
+      localStorage.removeItem('id');
+      localStorage.removeItem('username');
     }
   };
 
