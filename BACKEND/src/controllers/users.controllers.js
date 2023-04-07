@@ -119,7 +119,7 @@ const getUsuario = async (req, res) => {
 		if (!usuario) {
 			return res.status(404).json({ msg: 'Usuario no encontrado' });
 		}
-		res.json(usuario);
+		res.json({usuario: usuario});
 	} catch (error) {
 		console.error(error.message);
 		res.status(500).json({ msg: 'Hubo un error obteniendo los datos' });

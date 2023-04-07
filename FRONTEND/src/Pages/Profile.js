@@ -10,7 +10,7 @@ export default function Profile() {
     const { userSubmitForm } = userCtx;
 
     const [userForm, setUserForm] = useState({
-        name: "",
+        username: "",
         country: "",
         address: "",
         City: "",
@@ -40,6 +40,7 @@ export default function Profile() {
                     }
                 });
                 setUserForm(response.data.usuario);
+                console.log(response.data)
                 setLoading(false);
             } catch (error) {
                 console.error(error);
@@ -61,7 +62,7 @@ export default function Profile() {
         try {
             const token = localStorage.getItem('token');
             const response = await clienteAxios.put('/Users/Update', {
-                username: userForm.name,
+                username: userForm.username,
                 email: userCtx.user.email,
                 country: userForm.country,
                 address: userForm.address,
@@ -93,7 +94,7 @@ export default function Profile() {
                 <form onSubmit={sendData}>
                     <label>
                         Nombre:
-                        <input type="text" name="name" value={userForm.name} onChange={handleChange} />
+                        <input type="text" name="username" value={userForm.username} onChange={handleChange} />
                     </label>
                     <br />
                     <label>
