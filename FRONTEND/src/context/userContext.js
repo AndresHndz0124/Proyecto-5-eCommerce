@@ -18,9 +18,9 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const registerUser = async (userData) => {
+  const registerUser = async (username,email,password) => {
     try {
-      const response = await clienteAxios.post('/Users/Create', userData);
+      const response = await clienteAxios.post('/Users/Create', {username,email,password});
       setAuthStatus(true);
       setUserData(response.data.user);
       localStorage.setItem('token', response.data.token);

@@ -12,7 +12,7 @@ function Signup() {
 	const userCtx = useContext(UserContext)
 	const { authStatus, registerUser } = userCtx
 
-	const [name, setName] = useState('');
+	const [username, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -24,7 +24,8 @@ function Signup() {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		// registerUser({name,email,password})
+		registerUser(username,email,password)
+		localStorage.setItem('isLoggedIn', true);
 		// try {
 		// 	// Realizar solicitud de registro de usuario
 		// 	const response = await clienteAxios.post('http://localhost:4000/Users/registerUser', {
@@ -66,7 +67,7 @@ function Signup() {
 								<Form onSubmit={handleSubmit}>
 									<Form.Group id='name'>
 										<Form.Label className='mt-2'>Nombre</Form.Label>
-										<Form.Control type='text' value={name} onChange={handleNameChange} required />
+										<Form.Control type='text' value={username} onChange={handleNameChange} required />
 									</Form.Group>
 									<Form.Group id='email'>
 										<Form.Label className='mt-2'>Correo electrónico</Form.Label>
