@@ -1,113 +1,141 @@
-import React, { useState, useEffect } from "react"
-import { db } from "../Pages/firebae-config"
-import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore"
-import { async } from "@firebase/util";
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../context/userContext';
+import clienteAxios from '../config/axios';
+import { toast } from 'react-toastify';
 
-function ContactForm() {
+export default function Profile() {
 
+    const userCtx = useContext(UserContext);
+    const { userSubmitForm } = userCtx;
 
-    const [formData, setFormData] = useState({
-        CreateName: "",
-        CreateEmail: "",
-        CreatePhone: "",
-        CreateComments: "",
-        CreateNumberPersons: "",
-        CreateDate: "",
+    const [userForm, setUserForm] = useState({
+        username: "",
+        email: "",
+        country: "",
+        address: "",
+        City: "",
+        State: "",
+        phone: "",
+        email: ""
     });
 
-    const [Viewers, SetViewer] = useState([])
-    const ViewersCollection = collection(db, "Viewers")
+    const [loading, setLoading] = useState(true);
 
+    let countries = [
+        "-----",
+        "México",
+        "Colombia",
+        "Perú",
+        "Chile",
+        "Otro país..."
+    ];
 
-    const handleChange = event => {
-        setFormData({
-            ...formData,
+    useEffect(() => {
+        const getUserData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await clienteAxios.get('/Users/get', {
+                    headers: {
+                        'x-auth-token': token
+                    }
+                });
+                setUserForm(response.data.usuario);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+                setLoading(false);
+            }
+        };
+        getUserData();
+    }, []);
+
+    const handleChange = (event) => {
+        setUserForm({
+            ...userForm,
             [event.target.name]: event.target.value
         });
     };
 
-    const handleSubmit = event => {
+    const sendData = async (event) => {
         event.preventDefault();
-        console.log(formData);
-        resetForm()
+        try {
+            const token = localStorage.getItem('token');
+            const response = await clienteAxios.put('/Users/Update', {
+                username: userForm.username,
+                // email: userForm.user.email,
+                country: userForm.country,
+                address: userForm.address,
+                City: userForm.city,
+                State: userForm.state,
+                phone: userForm.phone,
+            }, {
+                headers: {
+                    'x-auth-token': token
+                }
+            });
+            userSubmitForm(userForm);
+            toast.success(`User updated successfully`)
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occurred while updating the user");
+        }
     };
 
-    const create_comments = async () => {
-        await addDoc(ViewersCollection, { 
-            name: formData.CreateName, 
-            Phone: Number(formData.CreatePhone),
-            email: formData.CreateEmail, 
-            Comment: formData.CreateComments, 
-            Number_persons: formData.CreateNumberPersons,
-            Date: formData.CreateDate, })
+    if (loading) {
+        return <div>Loading...</div>
     }
 
 
-    const resetForm = () => {
-        setFormData({
-            CreateName: "",
-            CreateEmail: "",
-            CreatePhone: "",
-            CreateComments: "",
-            CreateNumberPersons: "",
-            CreateDate: "",
-        });
-    };
-
-    useEffect(() => {
-        const GetUsers = async () => {
-            const data = await getDocs(ViewersCollection)
-            SetViewer(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-        }
-        GetUsers()
-    }, [])
-
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={sendData}>
 
-            <div class="form-group">
-                <label for="formGroupExampleInput">Nombre</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Name" name="CreateName" value={formData.CreateName} onChange={handleChange} />
+            <div className="form-group">
+                <label htmlFor="formGroupExampleInput">Nombre</label>
+                <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Username" name="username" value={userForm.username} onChange={handleChange} />
             </div>
             <br />
 
-            <div class="form-group">
-                <label for="formGroupExampleInput">Teléfono</label>
-                <input type="tel" class="form-control" id="formGroupExampleInput" placeholder="Phone number" name="CreatePhone" value={formData.CreatePhone} onChange={handleChange} />
+            <div className="form-group">
+                <label htmlFor="formGroupExampleInput">Teléfono</label>
+                <input type="tel" className="form-control" id="formGroupExampleInput" placeholder="Phone number" name="phone" value={userForm.phone} onChange={handleChange} />
             </div>
             <br />
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
-                    name="CreateEmail" value={formData.CreateEmail} onChange={handleChange} />
-                <small id="emailHelp" class="ayuda">We'll never share your email with anyone else.</small>
+            <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email address</label>
+                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+                    name="email" value={userForm.email} readOnly />
+                <small id="emailHelp" className="ayuda">We'll never share your email with anyone else.</small>
             </div>
             <br />
 
-            <div class="form-group">
-                <div className="Booking_data">
-                    <div>
-                        <label for="formGroupExampleInput">Numero de personas</label>
-                        <input type="number" class="form-control" name="CreateNumberPersons" value={formData.CreateNumberPersons} onChange={handleChange} />
+            <div className="form-row">
+                <div className="Address_Data">
+                <div class="form-group col-md-4">
+                        <label htmlFor="inputCountry">País</label>
+                        <select class="form-control" name="country" value={userForm.country} onChange={handleChange}>
+                            {countries.map((country, index) => (
+                                <option key={index}>{country}</option>
+                            ))}                        </select>
                     </div>
-                    <div>
-                        <label for="formGroupExampleInput">Fecha</label>
-                        <input type="date" class="form-control" name="CreateDate" value={formData.CreateDate} onChange={handleChange} />
+                    <div class="form-group col-md-4">
+                        <label htmlFor="inputCity">Ciudad</label>
+                        <input type="text" className="form-control" id="formGroupExampleInput" name="City" value={userForm.City} onChange={handleChange} />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label htmlFor="inputState">Estado</label>
+                        <input type="text" className="form-control" id="inputState" placeholder="State" name="State" value={userForm.State} onChange={handleChange}/>
                     </div>
                 </div>
             </div>
 
             <br />
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Descripción</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Messages and Comments" rows="3" name="CreateComments" value={formData.CreateComments} onChange={handleChange}></textarea>
+            <div className="form-group">
+                <label htmlFor="exampleFormControlTextarea1">Dirección</label>
+                <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="address" rows="3" name="address" value={userForm.address} onChange={handleChange}></textarea>
             </div>
             <br />
-            <div className="Boton_summit"><button type="submit" class="btn btn-warning" onClick={create_comments}>Summit</button></div>
-            {/* <div className="Boton_summit"><button type="submit" class="btn btn-warning">Summit</button></div> */}
+            <div className="Boton_summit"><button type="submit" className="btn btn-warning">Summit</button></div>
         </form>
     );
 }
-
-export default ContactForm;

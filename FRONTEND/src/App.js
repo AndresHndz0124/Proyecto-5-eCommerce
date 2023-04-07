@@ -4,9 +4,8 @@ import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Blog from "./Pages/Blog";
+import User_Profile from "./Pages/Profile";
 import Cart from './Pages/Home';
-import Profile from './Pages/Profile'
 
 import initFontAwesome from "./utility/initFontAwesome";
 import Singup from './Pages/LoginRegister/RegisterUser'
@@ -23,8 +22,7 @@ function App() {
 
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Cart />} />
-          <Route path="/Blog" element={<Blog />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/User_Profile" element={<User_Profile />} />
         </Route>
 
         <Route path='/login' element={<LoginForm />} />
