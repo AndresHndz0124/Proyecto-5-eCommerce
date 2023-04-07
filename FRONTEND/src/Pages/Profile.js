@@ -6,25 +6,20 @@ import clienteAxios from '../config/axios';
 
 export default function Profile() {
 
-    
     const userCtx = useContext(UserContext);
-
     const { userSubmitForm } = userCtx;
 
-    const { name, country, address, city, state, phone } = userCtx.user || {};
-
-    const email = localStorage.getItem('email');
-
     const [userForm, setUserForm] = useState({
-        id: "",
         name: "",
         country: "",
         address: "",
-        city: "",
-        state: "",
+        City: "",
+        State: "",
         phone: "",
-        email
-    })
+        email: ""
+    });
+
+    const [loading, setLoading] = useState(true);
 
     let countries = [
         "-----",
@@ -35,47 +30,48 @@ export default function Profile() {
         "Otro país..."
     ];
 
-    const handleChange = async (event) => {
+    useEffect(() => {
+        const getUserData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await clienteAxios.get('/Users/get', {
+                    headers: {
+                        'x-auth-token': token
+                    }
+                });
+                setUserForm(response.data.usuario);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+                setLoading(false);
+            }
+        };
+        getUserData();
+    }, []);
+
+    const handleChange = (event) => {
         setUserForm({
             ...userForm,
             [event.target.name]: event.target.value
         });
     };
 
-    const handleUserLookup = async () => {
-        try {
-            const response = await clienteAxios.get(`/users/email/${userForm.email}`);
-            const user = response.data;
-
-            setUserForm(prevUserForm => ({
-                ...prevUserForm,
-                id: user.id,
-                name: user.name,
-                country: user.country,
-                address: user.address,
-                city: user.city,
-                state: user.state,
-                phone: user.phone,
-            }));
-        } catch (error) {
-            console.error(error);
-            alert("An error occurred while looking up the user");
-        }
-    }
-
     const sendData = async (event) => {
         event.preventDefault();
         try {
-                // _id: userCtx.user._id,
-            await clienteAxios.put("/Users/Update", {
-                id: userForm.id,
-                name: userForm.name,
+            const token = localStorage.getItem('token');
+            const response = await clienteAxios.put('/Users/Update', {
+                username: userForm.name,
                 email: userCtx.user.email,
                 country: userForm.country,
                 address: userForm.address,
-                city: userForm.city,
-                state: userForm.state,
+                City: userForm.city,
+                State: userForm.state,
                 phone: userForm.phone,
+            }, {
+                headers: {
+                    'x-auth-token': token
+                }
             });
             userSubmitForm(userForm);
             alert("User updated successfully");
@@ -85,19 +81,9 @@ export default function Profile() {
         }
     };
 
-
-    useEffect(() => {
-        setUserForm({
-            name,
-            country,
-            address,
-            city,
-            state,
-            phone,
-            email
-        });
-        handleUserLookup();
-    }, [name, country, address, city, state, phone, email]);
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     return (
         <React.Fragment>
@@ -107,12 +93,12 @@ export default function Profile() {
                 <form onSubmit={sendData}>
                     <label>
                         Nombre:
-                        <input type="text" name="name" value={localStorage.getItem('username')} onChange={handleChange} />
+                        <input type="text" name="name" value={userForm.name} onChange={handleChange} />
                     </label>
                     <br />
                     <label>
                         Correo electrónico:
-                        <input type="email" name="email" value={localStorage.getItem('email')} readOnly />
+                        <input type="email" name="email" value={userForm.email} readOnly />
                     </label>
                     <br />
                     <label>
@@ -131,12 +117,12 @@ export default function Profile() {
                     <br />
                     <label>
                         Ciudad:
-                        <input type="text" name="city" value={userForm.city} onChange={handleChange} />
+                        <input type="text" name="city" value={userForm.City} onChange={handleChange} />
                     </label>
                     <br />
                     <label>
                         Estado:
-                        <input type="text" name="state" value={userForm.state} onChange={handleChange} />
+                        <input type="text" name="state" value={userForm.State} onChange={handleChange} />
                     </label>
                     <br />
                     <label>

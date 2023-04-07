@@ -3,31 +3,14 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 
-const getUsuario = async (req, res) => {
-	try {
-		const usuarios = await Usuario.find({})
-		res.json({ usuarios })
-	} catch (error) {
-		res.status(500).json({ msg: 'Hubo un error obteniendo los datos' })
-	}
-}
-
-// Endpoint para obtener el ID de un usuario por correo electrónico
-const getIdByEmail = async (req, res) => {
-	const { email } = req.params;
-	try {
-		const user = await Usuario.findOne({ email });
-		res.json({
-			id: user._id,
-			username: user.username
-		});
-	} catch (error) {
-		res.status(500).json({
-			msg: 'Hubo un error obteniendo el ID del usuario',
-		});
-	}
-};
-
+// const getUsuario = async (req, res) => {
+// 	try {
+// 		const usuarios = await Usuario.find({})
+// 		res.json({ usuarios })
+// 	} catch (error) {
+// 		res.status(500).json({ msg: 'Hubo un error obteniendo los datos' })
+// 	}
+// }
 
 // CREAR UN USUARIO JWT
 const createUsuario = async (req, res) => {
@@ -130,6 +113,19 @@ const verifyUser = async (req, res) => {
 	}
 }
 
+const getUsuario = async (req, res) => {
+	try {
+		const usuario = await Usuario.findById(req.user.id).select('-password');
+		if (!usuario) {
+			return res.status(404).json({ msg: 'Usuario no encontrado' });
+		}
+		res.json(usuario);
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).json({ msg: 'Hubo un error obteniendo los datos' });
+	}
+};
+
 const Updateuser = async (req, res) => {
 	// const newDataForOurUser = req.body
 	// console.log(req.body._id)
@@ -144,4 +140,4 @@ const Updateuser = async (req, res) => {
 	}
 }
 
-module.exports = { getUsuario, createUsuario, Updateuser, loginUser, verifyUser, getIdByEmail }
+module.exports = { getUsuario, createUsuario, Updateuser, loginUser, verifyUser }
