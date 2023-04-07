@@ -5,6 +5,8 @@ import { UserContext } from '../context/userContext';
 import clienteAxios from '../config/axios';
 
 export default function Profile() {
+
+    
     const userCtx = useContext(UserContext);
 
     const { userSubmitForm } = userCtx;
@@ -16,7 +18,6 @@ export default function Profile() {
     const [userForm, setUserForm] = useState({
         id: "",
         name: "",
-        lastname: "",
         country: "",
         address: "",
         city: "",
@@ -50,7 +51,6 @@ export default function Profile() {
                 ...prevUserForm,
                 id: user.id,
                 name: user.name,
-                lastname: user.lastname,
                 country: user.country,
                 address: user.address,
                 city: user.city,
@@ -107,7 +107,7 @@ export default function Profile() {
                 <form onSubmit={sendData}>
                     <label>
                         Nombre:
-                        <input type="text" name="name" value={userForm.name} onChange={handleChange} />
+                        <input type="text" name="name" value={localStorage.getItem('username')} onChange={handleChange} />
                     </label>
                     <br />
                     <label>

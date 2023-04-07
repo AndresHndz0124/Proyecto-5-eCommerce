@@ -96,7 +96,7 @@ const loginUser = async (req, res) => {
 		const payload = {
 			user: {
 				id: foundUser.id,
-			},
+			}
 		}
 		// 2. FIRMA DEL JWT
 		if (email && passCorrecto) {
@@ -131,20 +131,16 @@ const verifyUser = async (req, res) => {
 }
 
 const Updateuser = async (req, res) => {
-	const { username, country, address, City, State, phone } = req.body
 	// const newDataForOurUser = req.body
 	// console.log(req.body._id)
+	const { username, country, address, City, State, phone } = req.body
 	try {
-		const Updateusers = await Usuario.findByIdAndUpdate(req.body._id,
-			{ username, country, address, City, State, phone }, { new: true }
-		).select("-password")
-
-		res.json(Updateusers)
+		const actualizacionUsuario = await Usuario.findByIdAndUpdate(req.user.id, { username, country, address, City, State, phone }, { new: true })
+		res.json(actualizacionUsuario)
 	} catch (error) {
 		res.status(500).json({
-			msg: 'Hubo un error actualizando el  Usuario',
+			msg: 'Hubo un error actualizando la Usuario',
 		})
-
 	}
 }
 

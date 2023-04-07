@@ -8,8 +8,7 @@ export const UserProvider = ({ children }) => {
   const [authStatus, setAuthStatus] = useState(false);
   const [userData, setUserData] = useState({});
 
-  const [isLoggedOut, setIsLoggedOut] = useState(false);
-
+  // const [isLoggedOut, setIsLoggedOut] = useState(false);
 
   const handleChange = (event) => {
     event.preventDefault()
@@ -70,13 +69,13 @@ export const UserProvider = ({ children }) => {
       const response = await clienteAxios.post('/Users/login', {email,password,});
       console.log('datos ingresados',response);
 
-      const userResponse = await clienteAxios.get(`/users/email/${email}`);
-      const { id, username } = userResponse.data;
+      // const userResponse = await clienteAxios.get(`/users/email/${email}`);
+      // const { id, username } = userResponse.data;
       
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('email', email);
-      localStorage.setItem('id', id);
-      localStorage.setItem('username', username);
+      // localStorage.setItem('id', id);
+      // localStorage.setItem('username', username);
       
       setAuthStatus(true);
       setUserData(response.data.user);
@@ -87,8 +86,8 @@ export const UserProvider = ({ children }) => {
       setUserData({});
       localStorage.removeItem('token');
       localStorage.removeItem('email');
-      localStorage.removeItem('id');
-      localStorage.removeItem('username');
+      // localStorage.removeItem('id');
+      // localStorage.removeItem('username');
     }
   };
 
@@ -106,7 +105,7 @@ export const UserProvider = ({ children }) => {
     setAuthStatus(false);
     setUserData({});
   };
-  
+
   const userSubmitForm = async (data) => {
         
     console.log("Actualizar datos de usuario")
