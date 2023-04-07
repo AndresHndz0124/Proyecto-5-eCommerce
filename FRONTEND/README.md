@@ -1,29 +1,45 @@
-# Proyecto No. 4: Restaurant App React
+# Proyecto No. 5: Aplicación de Comercio Electrónico
 
-URL https://elaborate-smakager-891d29.netlify.app/
+URL Front https://harmonious-fenglisu-673abc.netlify.app/login
+REACT_APP_BACKEND_URL=https://app-ecommerce.onrender.com
 
 ## 1. Intro
-El siguiente codigo hace referencia al segundo proyecto del modulo de Fronted del Bootcamp de UCAMP.
+El siguiente codigo hace referencia al quinto proyecto del Bootcamp de UCAMP donde se busca realizar un proyecto de "eCommerce" para poner en practica habilidades con respecto a aplicaciones "Fullstack".
 
-El objetivo de este proyecto es poder  construir una pagina web personalizada poniendo en practica los conocimientos sobre React, a través de los cuales sera posible digitar iformación a traves de la pagina web y ser alamacenada en Firebase. Toda la información que se digite en el formulario de la pagina **HOME**, es posible visualizarla en la vista de la pagina **Reservas**, En dicha pagina sera posible eliminar las "Reservas" y se renderiza la pagina con los cambios. Así mismo dicha modificación se ve reflejada en la bas de datos de firebase. Adicional entran los conocmientos empleados en el primer proyecto (HTML, CSS, Responsive Web Design).
+El objetivo de este proyecto es poner en practica todos los temas vistos durante el bootcamp incluyendo FRONTEND y BACKEND. Con el fin de construir una pagina web personalizada creada a base de React para el FRONTED; mientras que para el BACKEND se hizo bajo express y MongodB para almacenar la información relevante en cuanton a datos del usuario así como las compras que realiza. 
 
-La pagina web No es una empresa real, es netamente academica inspirada en varios sitios web buscando con el fin de diseñar una interfaz capaz de realizar las operaciones CRUD con la ayuda de un formulario; el cual se basa en un "Ejemplo" de almacenamiento de información que proporciona una persona al momento de reservar en un restaurante.
+La pagina web No es una empresa real, es netamente academica inspirada en varios sitios web con el fin de diseñar una interfaz capaz de realizar las operaciones y conocimientos de "Fullstack"; la cual se basa en un "Ejemplo" de un comercio electrónico donde se realizan procesos de comercialización online.
 
-## 2. Paginas
+## 2. Secciones
 La pagina web cuenta con las siguientes secciones:
+- Un catálogo de productos.
+- Un carrito de compras.
+- Una pasarela de pago construida a través de PayPal.
+- Autenticación (registro de usuario e inicio de sesión, a través de JWT)
+- Autorización (zona privada donde el usuario pueda ver su perfil)
 
-- **1. Header**
+## 3. Tecnologías
+- FRONTEND
+    - ReactJS
+    - Context API (Manejo de estados)
 
-- **2. Blog**
+- BACKEND
+    - Node con ExpressJS
 
-- **3. Formulario de Reserva / Visualización de reservas**
+- BASE DE DATOS
+    - MongoDB
 
-- **4. Footer**
+## 4. Rutas
+
+- **1. Login**
+
+- **2. Home**
+
+- **3. Profile**
+
+- **4. Logout**
+
+- **5. CheckOut**
+ *Este ultimo esta inmerso a través de un complemento desplegable que esta inmerso en el header por ende se mantiene*
  
- 
-
-****
-
-
-
-![video](video/Proyecto4_react.mp4)
+En el siguiente link se encuentra el prototipado simple de la pagina web así como las interacciones con cada pagina
