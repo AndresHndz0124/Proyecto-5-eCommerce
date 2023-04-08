@@ -15,7 +15,7 @@ La pagina web No es una empresa real, es netamente academica inspirada en varios
 La pagina web cuenta con las siguientes secciones:
 - Un catálogo de productos.
 - Un carrito de compras.
-- Una pasarela de pago construida a través de PayPal.
+- Una pasarela de pago construida a través de PayPal, la cual se encuentra inmersa dentro del componente "Carrito de compras".
 - Autenticación (registro de usuario e inicio de sesión, a través de JWT)
 - Autorización (zona privada donde el usuario pueda ver su perfil)
 
