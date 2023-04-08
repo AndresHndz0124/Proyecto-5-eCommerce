@@ -1,7 +1,8 @@
 # Proyecto No. 5: Aplicación de Comercio Electrónico
 
-URL Front https://harmonious-fenglisu-673abc.netlify.app/login
-REACT_APP_BACKEND_URL=https://app-ecommerce.onrender.com
+- URL Front https://harmonious-fenglisu-673abc.netlify.app/login
+
+- REACT_APP_BACKEND_URL=https://app-ecommerce.onrender.com
 
 ## 1. Intro
 El siguiente codigo hace referencia al quinto proyecto del Bootcamp de UCAMP donde se busca realizar un proyecto de "eCommerce" para poner en practica habilidades con respecto a aplicaciones "Fullstack".
@@ -43,3 +44,4 @@ La pagina web cuenta con las siguientes secciones:
  *Este ultimo esta inmerso a través de un complemento desplegable que esta inmerso en el header por ende se mantiene*
  
 En el siguiente link se encuentra el prototipado simple de la pagina web así como las interacciones con cada pagina
+https://www.figma.com/file/B3fWmt1hwFZjj6pj7qVB94/Untitled?node-id=0-1&t=AaDhXMqnFkP9hs0u-0

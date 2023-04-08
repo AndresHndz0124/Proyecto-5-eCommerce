@@ -13,16 +13,16 @@ function Header() {
             <nav className="navbar_propio navbar-expand-lg navbar-dark bg-dark static-top">
                 {/* <nav className="navbar-expand-lg navbar-dark bg-dark static-top"> */}
                 <div className="container_propio container header">
-                    <a className="navbar-brand" href="!#">
+                    <a className="navbar-brand" href="">
                         <img src="https://reverent-banach-cb9630.netlify.app/logo-ucamp-dark.png" alt="..." height="60"></img>
                     </a>
                     <div className="Div_center" id="navbarSupportedContent">
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="!#">ECommerce</a>
+                                <a className="nav-link active" aria-current="page" href="">ECommerce</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="!#">PROYECTO 5: Aplicación de Comercio Electrónico</a>
+                                <a className="nav-link" href="">PROYECTO 5: Aplicación de Comercio Electrónico</a>
                             </li>
                         </ul>
                     </div>
