@@ -1,11 +1,19 @@
+import { useNavigate } from "react-router-dom"; // Importamos useNavigate
 import React, { useContext } from "react";
 import CartContext from "../../context/CartContext";
-import styles from "./styles.module.scss";
+import styles from "./styles_product.module.scss";
 // import { ProductsData } from "../../data/Data";
 
 const Products = () => {
-  /* Traemos del context la funcion para agregar un producto */
   const { AddItemToCart,products } = useContext(CartContext);
+  const navigate = useNavigate(); // Obtenemos la función navigate
+  
+  const handleProductClick = (id) => {
+    // console.log(id);
+    navigate(`/product/${id}`);
+  };
+  
+
   return (
     <div className={styles.productsContainer}>
       {products &&
@@ -16,6 +24,7 @@ const Products = () => {
               <p>{product.name} </p>
               <span>${product.price}</span>
             </div>
+            <button type="button" class="btn btn-secondary" onClick={() => handleProductClick(product._id)}>Info</button>
             {!product.inCart ? (
               <button onClick={() => AddItemToCart(product)}>
                 Add to Cart
@@ -23,6 +32,7 @@ const Products = () => {
             ) : (
               <button>En el carrito</button>
             )}
+
           </div>
         ))}
     </div>

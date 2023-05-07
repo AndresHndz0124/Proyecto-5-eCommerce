@@ -31,6 +31,7 @@ export const CartProvider = ({ children }) => {
       .get("/Products/get")
       // .get(process.env.URL_BACKEND) 
       .then(({ data }) => setProducts(data.Product));
+      // .then(({ data }) => setProducts(data));
   };
 
   const AddItemToCart = (product) => {
@@ -71,6 +72,7 @@ export const CartProvider = ({ children }) => {
       );
     }
   };
+
 
   return (
     /* Envolvemos el children con el provider y le pasamos un objeto con las propiedades que necesitamos por value */

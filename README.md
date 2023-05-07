@@ -45,3 +45,5 @@ La pagina web cuenta con las siguientes secciones:
  
 En el siguiente link se encuentra el prototipado simple de la pagina web así como las interacciones con cada pagina
 https://www.figma.com/file/B3fWmt1hwFZjj6pj7qVB94/Untitled?node-id=0-1&t=AaDhXMqnFkP9hs0u-0
+
+

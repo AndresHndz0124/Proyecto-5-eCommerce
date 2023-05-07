@@ -1,16 +1,14 @@
 import React from "react";
 import Header from "./Header";
 import FooterPage from "./footer";
-import Home from "../Shopping_Cart/components/Home";
-import { CartProvider } from "../Shopping_Cart/context/CartContext";
-
+import Home_products from "../Shopping_Cart/components/Home/index";
 function Cart() {
     return (
         <React.Fragment>
             <Header />
-            <CartProvider>
-                <Home />
-            </CartProvider>
+            {/* <CartProvider> */}
+            <Home_products />
+            {/* </CartProvider> */}
             <FooterPage />
         </React.Fragment>
     )

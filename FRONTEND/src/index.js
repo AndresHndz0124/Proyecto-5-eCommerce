@@ -5,12 +5,15 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { UserProvider } from './context/userContext'
 import { ToastContainer } from 'react-toastify';
+import { CartProvider } from './Shopping_Cart/context/CartContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserProvider>
+    <CartProvider>
     <App />
+    </CartProvider>
     </UserProvider>
     <ToastContainer />
   </React.StrictMode>

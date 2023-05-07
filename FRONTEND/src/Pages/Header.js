@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import Carts from "../Shopping_Cart/components/Home/Cart_Home";
+import Carts from "../Shopping_Cart/components/Home/Header_Cart";
 import { CartProvider } from "../Shopping_Cart/context/CartContext";
 import { UserContext } from '../context/userContext'
 
@@ -53,14 +53,17 @@ function Header() {
                     </div>
                 </div>
                 {/* Muestra el componente Carts solo en las rutas diferentes a la página de inicio */}
-
+                {/* 
                 {location.pathname !== '/' && authStatus && (
                     <CartProvider>
                         <Carts />
                     </CartProvider>
+                )} */}
+                {location.pathname !== '/' && !location.pathname.includes('/product/') && authStatus && (
+                    <CartProvider>
+                        <Carts />
+                    </CartProvider>
                 )}
-
-
             </nav>
             <Outlet />
         </header >
